@@ -9,8 +9,14 @@ In order to allow other devs to test both read and write funcitonality, the doc 
 var async = require('async');
 
 var GoogleSpreadsheet = require("../index.js");
-var doc = new GoogleSpreadsheet('148tpVrZgcc-ReSMRXiQaqf9hstgT8HTzyPeKx6f399Y');
+var GoogleAuth = require('google-auth-library');
+
+var googleAuth = new GoogleAuth();
 var creds = require('./test_creds');
+var GOOGLE_AUTH_SCOPE = ["https://spreadsheets.google.com/feeds"];
+var authClient = new googleAuth.JWT(creds.client_email, null, creds.private_key, GOOGLE_AUTH_SCOPE, null);
+
+var doc = new GoogleSpreadsheet('148tpVrZgcc-ReSMRXiQaqf9hstgT8HTzyPeKx6f399Y');
 var sheet;
 
 module.exports.node_google_spreadsheet = {
@@ -27,7 +33,7 @@ module.exports.node_google_spreadsheet = {
     });
   },
   check_init_auth: function(test){
-    doc.useServiceAccountAuth(creds, function(err){
+    doc.setAuthClient(authClient, function(err){
       test.done(err);
     })
   },
