@@ -4,7 +4,6 @@ var xml2js = require("xml2js");
 var http = require("http");
 var querystring = require("querystring");
 var _ = require('lodash');
-var GoogleAuth = require("google-auth-library");
 
 var GOOGLE_FEED_URL = "https://spreadsheets.google.com/feeds/";
 
